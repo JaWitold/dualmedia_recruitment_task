@@ -1,7 +1,8 @@
-# Development Template for API & Web Services
+# DualMedia Recruitment Task
 
-This repository serves as a template for developing API and web services, utilizing Symfony framework for backend and Next.js for frontend. The architecture is designed to facilitate Docker-based development, optimized for Windows with WSL, and is easily adaptable for Linux & Docker environments.
+This repository serves as a recruitment task solution utilizing Symfony framework for API. The architecture is designed to facilitate Docker-based development, optimized for Windows with WSL, and is easily adaptable for Linux & Docker environments.
 
+  The repository contains extra container definitions and configurations because is developed over [github template](https://github.com/JaWitold/fullstack_development_template)
 ## Prerequisites
 
 - Docker installed on your system
@@ -16,7 +17,7 @@ Before running the application, environment variables must be set. Execute the f
 ```bash
 find . -type f -name ".env.example" -exec sh -c 'cp "$0" "${0%.example}"' {} \;
 ```
-> **Important:** `.env` files contain sensitive information and should not be committed to the repository.
+> **Important:** `.env` files contain sensitive information and are not be committed to the repository.
 
 ### Running the Application
 With `.env` files prepared, start the application using Docker Compose:
@@ -24,39 +25,40 @@ With `.env` files prepared, start the application using Docker Compose:
 ```bash
 docker-compose up -d
 ```
-This will build and run the following services:
 
-### SSL Certificates
-The `ssl/` directory contains scripts to generate SSL certificates for securing your local services. Follow the instructions in `ssl/readme.md` to generate and manage your SSL certificates.
+> **Important:** Before accessing `localhost:8080` for the first time it is mandatory to install composer packages and  migrate MySQL migrations. It can be done by executing:
+> ```bash
+> docker compose exec -t php bash -c "composer install"
+> docker compose exec -t php bash -c "php bin/console doctrine:migrations:migrate -n"
+> ```
 
-### Reverse Proxy and SSL
-To use the reverse proxy, you need to add domain mapping to your hosts file (on both Windows and Linux). By default, the SSL certificates are prepared for ***.template.com** subdomains.
+## Sample data
 
-#### For Windows:
-Add the following line to the hosts file located at `C:\Windows\System32\drivers\etc\hosts`
-```bash
-127.0.0.1       nginx.template.com
-127.0.0.1       next.template.com
-127.0.0.1       mailhog.template.com
-```
-#### For Linux:
-Add the following line to the `/etc/hosts` file
-```bash
-127.0.0.1       nginx.template.com
-127.0.0.1       next.template.com
-127.0.0.1       mailhog.template.com
-```
-> **Note:** The default SSL certificates can be reconfigured by modifying the `ssl/config/extfile.cnf` file according to your domain needs.
+Sample data could be found in `docker/mysql/` directory.
+
+## API Structure
+The solution serves the following API routes:
+
+### Order:
+- GET http://localhost:8080/api/order
+- POST http://localhost:8080/api/order
+- GET http://localhost:8080/api/order/{id}
+
+### Product:
+- GET http://localhost:8080/api/product
+- POST http://localhost:8080/api/product
+- GET http://localhost:8080/api/product/{id}
+
+Detailed documentation of the routes is available at  http://localhost:8080/api/doc and http://localhost:8080/api/doc.json
 
 ## Running Tests
 
-Before submitting a merge request, please ensure that the project passes the GitHub CI/CD pipeline. The following tests
-are performed:
+The following tests could be performed:
 
 - **PHP Code Sniffer**: Checks the code against coding standards to ensure consistency.
 
    ``` bash
-   docker-compose exec -t php sh -c "XDEBUG_MODE=off php vendor/bin/phpcs"
+   docker compose exec -t php sh -c "XDEBUG_MODE=off php vendor/bin/phpcs -p"
    ```
 - **PHPStan**: Performs static analysis to identify potential errors and improve code quality.
 

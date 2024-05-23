@@ -6,15 +6,15 @@
 
     <arg name="basepath" value="."/>
 
-    <file>src/</file>
-    <file>tests/</file>
+    <file>./src/</file>
+    <file>./tests/</file>
 
     <exclude-pattern>var/</exclude-pattern>
     <exclude-pattern>vendor/</exclude-pattern>
 
-    <arg name="severity" value="1"/>
-    <arg value="p"/>
-    <arg name="colors"/>
-    <arg name="report" value="full"/>
-    <arg name="encoding" value="utf-8"/>
+#    <arg name="severity" value="1"/>
+#    <arg value="p"/>
+#    <arg name="colors"/>
+#    <arg name="report" value="full"/>
+#    <arg name="encoding" value="utf-8"/>
 </ruleset>
