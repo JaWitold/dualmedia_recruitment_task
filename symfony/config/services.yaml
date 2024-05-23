@@ -22,3 +22,11 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    App\EventListener\ValidationEventListener:
+        tags:
+            - { name: kernel.event_listener, event: kernel.exception, method: onKernelException }
+    
+    App\Service\OrderCalculation\OrderCalculationCollectorService:
+        arguments:
+            - ['@app.item_sum_service', '@app.vat_sum_service']

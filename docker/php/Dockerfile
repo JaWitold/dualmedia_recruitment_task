@@ -6,7 +6,7 @@ RUN apt-get update && apt-get install -y git curl zip unzip libpq-dev
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 # install pdo
-RUN docker-php-ext-install pdo pdo_pgsql && docker-php-ext-enable pdo pdo_pgsql
+RUN docker-php-ext-install pdo pdo_pgsql pdo_mysql && docker-php-ext-enable pdo pdo_pgsql pdo_mysql
 
 # enable OPcache
 RUN docker-php-ext-install opcache && docker-php-ext-enable opcache
